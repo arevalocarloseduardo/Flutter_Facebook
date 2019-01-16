@@ -1,0 +1,148 @@
+{
+  "project_info": {
+    "project_number": "8027045445",
+    "firebase_url": "https://myapplication-90754.firebaseio.com",
+    "project_id": "myapplication-90754",
+    "storage_bucket": "myapplication-90754.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8027045445:android:78e2dce23f394def",
+        "android_client_info": {
+          "package_name": "com.bitstudio.bitstudio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8027045445-gnbqmr0okrgu137nq1gi6oo82tkhfgls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz0Rc3QbWKzzFjJnE1ZKR1qM0fNIydWjE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8027045445:android:e4a0fb73a7eb99df",
+        "android_client_info": {
+          "package_name": "com.bitstudio.estetica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8027045445-5rvlb1oerttvk1s06q7brc9u135ombt3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bitstudio.estetica",
+            "certificate_hash": "1dba91c446b31edfcfec76ef0077c04d362741e4"
+          }
+        },
+        {
+          "client_id": "8027045445-gnbqmr0okrgu137nq1gi6oo82tkhfgls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz0Rc3QbWKzzFjJnE1ZKR1qM0fNIydWjE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8027045445-gnbqmr0okrgu137nq1gi6oo82tkhfgls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8027045445:android:9bc976bf9b3a9802",
+        "android_client_info": {
+          "package_name": "com.bitstudio.esteticaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8027045445-gnbqmr0okrgu137nq1gi6oo82tkhfgls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz0Rc3QbWKzzFjJnE1ZKR1qM0fNIydWjE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8027045445:android:6505897873e29977",
+        "android_client_info": {
+          "package_name": "com.example.bitstudio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8027045445-gnbqmr0okrgu137nq1gi6oo82tkhfgls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz0Rc3QbWKzzFjJnE1ZKR1qM0fNIydWjE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

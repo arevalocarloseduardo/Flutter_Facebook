@@ -1,40 +1,10 @@
-import 'dart:async';
-import 'package:bitstudio/PantallaPrincipal.dart';
 import 'package:flutter/material.dart';
-import 'package:bitstudio/MenuPrincipal.dart';
-
-
-void main() => runApp(MaterialApp(
-  theme: ThemeData(
-    primaryColor: Colors.purpleAccent,
-    accentColor: Colors.yellowAccent
-    ),
-  debugShowCheckedModeBanner: false,
-  home: SplashScreen(),
-  routes: <String,WidgetBuilder>{
-    '/Second':(BuildContext context)=>MenuPrincipal(),
-  },
-  ));
-
-
-class SplashScreen extends StatefulWidget {
+class MenuPrincipal extends StatefulWidget {
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _MenuPrincipalState createState() => _MenuPrincipalState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Timer(Duration(seconds:3),
-    ()=> Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context)=>PantallaPrincipal()),
-    ));
-  }
-
+class _MenuPrincipalState extends State<MenuPrincipal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

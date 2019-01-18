@@ -24,6 +24,7 @@ dependencies:
   flutter_auth_buttons: ^0.3.1
   firebase_auth: ^0.6.6
   flutter_facebook_login: ^1.2.0
+  firebase_database: ^1.0.5
 
 dev_dependencies:
   flutter_test:

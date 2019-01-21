@@ -26,6 +26,7 @@ dependencies:
   flutter_facebook_login: ^1.2.0
   firebase_database: ^1.0.5
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -12,7 +12,7 @@ class ListViewNote extends StatefulWidget {
 }
  
 final notesReference = FirebaseDatabase.instance.reference().child('notes');
- 
+ //helo 
 class _ListViewNoteState extends State<ListViewNote> {
   List<Note> items;
   StreamSubscription<Event> _onNoteAddedSubscription;
@@ -52,7 +52,7 @@ class _ListViewNoteState extends State<ListViewNote> {
               itemBuilder: (context, position) {
                 return Column(
                   children: <Widget>[
-                    Divider(height: 5.0),
+                    
                     ListTile(
                       title: Text(
                         '${items[position].title}',
@@ -69,7 +69,7 @@ class _ListViewNoteState extends State<ListViewNote> {
                         ),
                       ),
                       leading: Column(
-                        children: <Widget>[
+                         children: <Widget>[
                           Padding(padding: EdgeInsets.all(10.0)),
                           CircleAvatar(
                             backgroundColor: Colors.deepOrange,
@@ -89,10 +89,11 @@ class _ListViewNoteState extends State<ListViewNote> {
                       ),
                       onTap: () => _navigateToNote(context, items[position]),
                     ),
+                    Divider(height: 5.0),
                   ],
                 );
-              }),
-        ),
+              }
+              )),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () => _createNewNote(context),

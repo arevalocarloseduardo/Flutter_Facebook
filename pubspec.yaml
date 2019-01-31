@@ -27,6 +27,7 @@ dependencies:
   firebase_database: ^1.0.5
   flutter_calendar: ^0.0.8
   flutter_swiper: ^1.1.4
+  
 
 
 dev_dependencies:

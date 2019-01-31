@@ -105,7 +105,8 @@ void _navigateToNote(BuildContext context, Tratamientos note) async {
     setState(() {
       items[items.indexOf(oldNoteValue)] =
           new Tratamientos.fromSnapshot(event.snapshot);
-    });
+    },
+    );
   }
 }
 

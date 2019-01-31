@@ -9,6 +9,26 @@ class PantallaPrincipal extends StatefulWidget {
   _PantallaPrincipalState createState() => _PantallaPrincipalState();
 }
 
+
+esto esta piola 
+
+para otros fragment
+_auth = FirebaseAuth.instance;
+
+  getCurrentUser () async {
+  mCurrentUser = await _auth.currentUser();
+  print('Hello ' + mCurrentUser.uid.toString());
+  setState(() {
+    mCurrentUser != null ? accountStatus = 'Signed In' : 'Not Signed In';
+  });
+
+  print('here outside async');
+  }
+  print("user${getCurrentUser()}");
+   
+
+
+
 class _PantallaPrincipalState extends State<PantallaPrincipal> {
   FirebaseAuth _auth = FirebaseAuth.instance;
   bool isLogged=false;

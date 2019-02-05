@@ -1,12 +1,11 @@
 import 'dart:async';
-
+import 'package:bitstudio/model/subTratamientos.dart';
 import 'package:bitstudio/ui/especialistas_screen.dart';
-
 import 'package:firebase_database/firebase_database.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:bitstudio/model/tratamientos.dart';
+import 'package:folding_cell/folding_cell.dart';
+import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 
 class ListviewTratamientos extends StatefulWidget {
   @override
@@ -15,21 +14,32 @@ class ListviewTratamientos extends StatefulWidget {
 
 final tratamientosReference =
     FirebaseDatabase.instance.reference().child('tratamientos');
+final subTratamientosReference =
+    FirebaseDatabase.instance.reference().child('subtratamientos');
 
 class _ListviewTratamientosState extends State<ListviewTratamientos> {
+  List<SubTratamientos> sub;
   List<Tratamientos> items;
   StreamSubscription<Event> _onNoteAddedSubscription;
   StreamSubscription<Event> _onNoteChangedSubscription;
+
+  StreamSubscription<Event> _onSubAddedSubscription;
+  StreamSubscription<Event> _onSubChangedSubscription;
 
   @override
   void initState() {
     super.initState();
 
     items = new List();
+    sub = new List();
     _onNoteAddedSubscription =
         tratamientosReference.onChildAdded.listen(_onNoteAdded);
     _onNoteChangedSubscription =
         tratamientosReference.onChildChanged.listen(_onNoteUpdated);
+    _onSubAddedSubscription =
+        subTratamientosReference.onChildAdded.listen(_onSubAdded);
+    _onSubChangedSubscription =
+        subTratamientosReference.onChildChanged.listen(_onSubUpdated);
   }
 
   @override
@@ -38,61 +48,93 @@ class _ListviewTratamientosState extends State<ListviewTratamientos> {
       title: "jajaj",
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.purple[600],
           centerTitle: true,
           title: Text("Selecciona Tratamientos"),
         ),
-        body: Center(
-            child: ListView.builder(
-              itemCount: items.length,
-              padding: const EdgeInsets.all(5.0),
-              itemBuilder: (context, position) {
-                return Column(
-                  children: <Widget>[
-
-                InkWell(
-                  onTap: () => _navigateToNote(context, items[position]),
-                  child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  elevation: 5,
-                  margin: EdgeInsets.all(10),
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                      child: Stack(
-                        children: <Widget>[
-                          Image.network(
-                            '${items[position].imageurl}',
+        body: Container(
+          color: Colors.white,
+          alignment: Alignment.topCenter,
+          child:ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return ConfigurableExpansionTile(
+                    header: Container(
+                      alignment: Alignment.center,
+                      height: 200,
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Card(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Stack(
+                            children: <Widget>[
+                              Image.network(
+                                '${items[index].imageurl}',
+                                filterQuality: FilterQuality.low,
+                              ),
+                              Text(
+                                '${items[index].id}',
+                                style: TextStyle(
+                                    fontSize: 40.0,
+                                    color: Colors.deepPurple,
+                                    fontStyle: FontStyle.italic),
+                                textAlign: TextAlign.right,
+                              )
+                            ],
                           ),
-                          Text(
-                            '${items[position].title}',
-                            style: TextStyle(
-                                fontSize: 40.0,
-                                color: Colors.deepPurple,
-                                fontStyle: FontStyle.italic),
-                            textAlign: TextAlign.right,
-                          )
-                          
-                        ],
-                      ),),
-                ),
-                )
-                
-              ],
+                        ),
+                      ),
+                    ),
+                    children: creartext("${items[index].id}")                   
+                  );
+                },
               
-            );
-          },
-        )),
+          ),
+        ),
       ),
     );
   }
-void _navigateToNote(BuildContext context, Tratamientos note) async {
+
+  List<Column> creartext(String id) {
+    List<Column> childrenText = List<Column>();
+    for (var name in sub) {
+      if(name.tratamiento==id){
+      childrenText.add(new Column(
+        children: <Widget>[
+          ListTile(
+            leading: Container(
+              child: Icon(Icons.arrow_drop_down, color: Colors.black),
+            ),
+            title: Text(name.nombre),
+            subtitle: Row(
+              children: <Widget>[
+                Icon(Icons.monetization_on, color: Colors.grey),
+                Text(
+                  " 80",
+                  style: TextStyle(color: Colors.black),
+                )
+              ],
+            ),
+            trailing: Text("duracion 40 min"),
+            onTap: () {
+              print("object");
+            },
+          )
+        ],
+      ),
+      );}
+      
+    }
+    return childrenText;
+  }
+
+  void _navigateToNote(BuildContext context, Tratamientos note) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EspecialistasScreen(note)),
     );
   }
+
   void _onNoteAdded(Event event) {
     setState(() {
       items.add(new Tratamientos.fromSnapshot(event.snapshot));
@@ -102,24 +144,27 @@ void _navigateToNote(BuildContext context, Tratamientos note) async {
   void _onNoteUpdated(Event event) {
     var oldNoteValue =
         items.singleWhere((note) => note.id == event.snapshot.key);
+    setState(
+      () {
+        items[items.indexOf(oldNoteValue)] =
+            new Tratamientos.fromSnapshot(event.snapshot);
+      },
+    );
+  }
+
+  void _onSubAdded(Event event) {
     setState(() {
-      items[items.indexOf(oldNoteValue)] =
-          new Tratamientos.fromSnapshot(event.snapshot);
-    },
+      sub.add(new SubTratamientos.fromSnapshot(event.snapshot));
+    });
+  }
+
+  void _onSubUpdated(Event event) {
+    var oldNoteValue = sub.singleWhere((note) => note.id == event.snapshot.key);
+    setState(
+      () {
+        sub[sub.indexOf(oldNoteValue)] =
+            new SubTratamientos.fromSnapshot(event.snapshot);
+      },
     );
   }
 }
-
-/*Card(
-            
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              
-            child: Image.network(
-                "https://www.imagen.com.mx/assets/img/imagen_share.png",
-                fit: BoxFit.fill,),
-                
-             elevation: 5,
-            margin: EdgeInsets.all(10),
-          )*/

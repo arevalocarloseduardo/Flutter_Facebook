@@ -4,8 +4,7 @@ import 'package:bitstudio/model/note.dart';//importo la clase note
  
 class NoteScreen extends StatefulWidget {
   final Note note;
-  NoteScreen(this.note);
- 
+  NoteScreen(this.note); 
   @override
   State<StatefulWidget> createState() => new _NoteScreenState();
 }
@@ -19,8 +18,7 @@ class _NoteScreenState extends State<NoteScreen> {
  
   @override
   void initState() {
-    super.initState();
-     
+    super.initState();     
     _titleController = new TextEditingController(text: widget.note.title);
     _descriptionController = new TextEditingController(text: widget.note.description);
   }

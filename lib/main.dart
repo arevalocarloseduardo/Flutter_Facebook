@@ -1,5 +1,6 @@
 import 'package:bitstudio/SplasScreen.dart';
 import 'package:bitstudio/ui/listview_tratamientos.dart';
+import 'package:bitstudio/ui/menu_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(
@@ -10,6 +11,7 @@ void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
   home: SplashScreen(),
   routes: <String,WidgetBuilder>{
+    '/tercero':(BuildContext context)=>MenuScreen(),
     '/Second':(BuildContext context)=>ListviewTratamientos(),
   },
   ));

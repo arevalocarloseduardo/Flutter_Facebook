@@ -73,7 +73,8 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                           Text("noseque pasa" + myUser.displayName),
                           Image.network(myUser.photoUrl),
                           RaisedButton(child: Text("chua"),
-                          onPressed: (){Navigator.of(context).pushNamed('/Second');},)
+                          onPressed: (){
+                            Navigator.of(context).pushNamed('/tercero');},)
                         ],
                       )
                     : FacebookSignInButton(

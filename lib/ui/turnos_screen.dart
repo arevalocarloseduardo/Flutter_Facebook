@@ -2,13 +2,12 @@ import 'package:bitstudio/model/especialistas.dart';
 import 'package:bitstudio/model/horarios.dart';
 import 'package:bitstudio/model/tratamientos.dart';
 import 'package:bitstudio/model/turnos.dart';
+import 'package:bitstudio/ui/confirmacion_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_calendar/flutter_calendar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
 
 class TurnosScreen extends StatefulWidget {
   final Especialistas especialistas;
@@ -24,10 +23,6 @@ final horariosReference =
     FirebaseDatabase.instance.reference().child('horarios');
 
 class _TurnosScreenState extends State<TurnosScreen> {
- 
-  
-
-  
   List<Turnos> turnos;
   List<Horarios> horarios;
 
@@ -95,28 +90,29 @@ class _TurnosScreenState extends State<TurnosScreen> {
   int dia;
   int diaSemana;
   String accountStatus = '******';
-FirebaseUser mCurrentUser;
-FirebaseAuth _auth;
+  FirebaseUser mCurrentUser;
+  FirebaseAuth _auth;
 
-  String fechaSeleccionada="${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
-
-  
+  String fechaSeleccionada =
+      "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
 
   @override
   void initState() {
     super.initState();
 
-   _auth = FirebaseAuth.instance;
+    _auth = FirebaseAuth.instance;
 
-  getCurrentUser () async {
-  mCurrentUser = await _auth.currentUser();
-  
-  setState(() {
-    mCurrentUser != null ? accountStatus = '${mCurrentUser.uid}' : 'no hay usuario';
-  });
-  }
-   print("antes del user${getCurrentUser()}");
-  
+    getCurrentUser() async {
+      mCurrentUser = await _auth.currentUser();
+
+      setState(() {
+        mCurrentUser != null
+            ? accountStatus = '${mCurrentUser.uid}'
+            : 'no hay usuario';
+      });
+    }
+
+    print("antes del user${getCurrentUser()}");
 
     horarios = new List();
     turnos = new List();
@@ -125,6 +121,7 @@ FirebaseAuth _auth;
     mes = DateTime.now().month;
     dia = DateTime.now().day;
     diaSemana = DateTime.now().weekday;
+    
 
     _onHorariosAddedSubscription = horariosReference
         .orderByChild("dia")
@@ -154,20 +151,20 @@ FirebaseAuth _auth;
     setState(() {
       hora.clear();
       horarios.clear();
-      turnos.clear(); 
+      turnos.clear();
       horaTurnos.clear();
-      
-      fechaSeleccionada="$diaC-$mesC-$anioC";
+
+      fechaSeleccionada = "$diaC-$mesC-$anioC";
       _onTurnosAddedSubscription = turnosReference
           .orderByChild("fecha")
           .equalTo("$diaC-$mesC-$anioC")
           .onChildAdded
-          .listen(_onTurnosAdded);   
+          .listen(_onTurnosAdded);
       _onHorariosAddedSubscription = horariosReference
           .orderByChild("dia")
           .equalTo("${date}")
           .onChildAdded
-          .listen(_onHorariosAdded);   
+          .listen(_onHorariosAdded);
     });
   }
 
@@ -175,6 +172,8 @@ FirebaseAuth _auth;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple[600],
+        centerTitle: true,
         title: Text("Horarios disponible"),
       ),
       body: Center(
@@ -216,16 +215,8 @@ FirebaseAuth _auth;
                     trailing: Icon(Icons.keyboard_arrow_right,
                         color: Colors.black, size: 30.0),
                     onTap: () {
-                      turnosReference.push()
-                  .set({
-                    'cliente': "${accountStatus}",
-                    'especialista': "${widget.especialistas.id}",
-                    'fecha': "${fechaSeleccionada}",
-                    'hora': "${hora[i]}",
-                    'tratamiento': "${widget.tratamientos.title}"
-                  }).then((_) {
-                    Navigator.pop(context);
-                  });},
+                      _navigateToNote(context, widget.tratamientos, widget.especialistas,hora[i],fechaSeleccionada);
+                    },
                   );
                 },
               ),
@@ -237,6 +228,19 @@ FirebaseAuth _auth;
   }
 
 /*
+
+  turnosReference.push()
+                  .set({
+                    'cliente': "${accountStatus}",
+                    'especialista': "${widget.especialistas.id}",
+                    'fecha': "${fechaSeleccionada}",
+                    'hora': "${hora[i]}",
+                    'tratamiento': "${widget.tratamientos.title}"
+                  }).then((_) {
+                    Navigator.pop(context);
+                  });
+
+                  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -292,14 +296,15 @@ FirebaseAuth _auth;
     setState(() {
       horarios.add(new Horarios.fromSnapshot(event.snapshot));
     });
-    
+
     imprimirListaHorarios(hora, horarios, p1);
 
     borrarTurnosReservados(horaTurnos, hora);
   }
 
   void _onHorariosUpdated(Event event) {
-    var oldNoteValue = horarios.singleWhere((note) => note.id == event.snapshot.key);
+    var oldNoteValue =
+        horarios.singleWhere((note) => note.id == event.snapshot.key);
     setState(
       () {
         horarios[horarios.indexOf(oldNoteValue)] =
@@ -309,20 +314,19 @@ FirebaseAuth _auth;
   }
 
   void _onTurnosAdded(Event event) {
-     setState(() {
+    setState(() {
       turnos.add(new Turnos.fromSnapshot(event.snapshot));
     });
-    horaTurnos.clear();    
-    for (var i = 0; i < turnos.length; i++) {  
-      if (turnos[i].especialista==widget.especialistas.id){ 
+    horaTurnos.clear();
+    for (var i = 0; i < turnos.length; i++) {
+      if (turnos[i].especialista == widget.especialistas.id) {
         print("turno especia${turnos[i].especialista}");
         print("especialista${widget.especialistas.id}");
         horaTurnos.add("${turnos[i].hora}");
         print("selleciono la hora${turnos[i].hora}");
         print("y fehca ${turnos[i].fecha}");
-      }      
+      }
     }
-
   }
 
   void _onTurnosUpdated(Event event) {
@@ -334,8 +338,12 @@ FirebaseAuth _auth;
     });
   }
 }
-
-
+void _navigateToNote(BuildContext context, Tratamientos note,Especialistas espe,hora,String dia) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ConfirmacionScreen(espe,note,hora,dia)),
+    );
+  }
 
 void borrarTurnosReservados(List horaTurnos, List hora) {
   for (var x = 0; x < horaTurnos.length; x++) {

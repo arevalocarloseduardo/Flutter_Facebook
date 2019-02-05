@@ -14,9 +14,7 @@ class EspecialistasScreen extends StatefulWidget {
   @override
   _EspecialistasScreenState createState() => _EspecialistasScreenState();
 }
-
-final especialistasReference =
-    FirebaseDatabase.instance.reference().child('especialistas');
+final especialistasReference = FirebaseDatabase.instance.reference().child('especialistas');
 
 class _EspecialistasScreenState extends State<EspecialistasScreen> {
   List<Tratamientos> tratamientos;
@@ -41,7 +39,7 @@ class _EspecialistasScreenState extends State<EspecialistasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor:  Colors.purple[600],
         centerTitle: true,
         title: Text("Selecciona Especialistas"),
       ),

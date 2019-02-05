@@ -11,7 +11,7 @@ void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
   home: SplashScreen(),
   routes: <String,WidgetBuilder>{
-    '/tercero':(BuildContext context)=>MenuScreen(),
+    '/tercero':(BuildContext context)=>MenuScreen(0),
     '/Second':(BuildContext context)=>ListviewTratamientos(),
   },
   ));

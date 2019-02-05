@@ -1,19 +1,24 @@
-import 'package:bitstudio/ui/listview_note.dart';
+import 'package:bitstudio/ui/informacion_screen.dart';
 import 'package:bitstudio/ui/listview_tratamientos.dart';
+import 'package:bitstudio/ui/misturnos_screen.dart';
 import 'package:bitstudio/ui/noticias_screen.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatefulWidget {
+  int i;
+  MenuScreen(this.i);
+
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+
   int currentTab = 0;
   NoticiasScreen one;
   ListviewTratamientos two;
-  ListviewTratamientos tree;
-  ListViewNote four;
+  MisTurnosScreen tree;
+  InformacionScreen four;
 
   List<Widget>pages;
   Widget currentPage;
@@ -23,12 +28,12 @@ class _MenuScreenState extends State<MenuScreen> {
   void initState() {
     one = NoticiasScreen();
     two = ListviewTratamientos();
-    tree =ListviewTratamientos();
-    four = ListViewNote();
+    tree =MisTurnosScreen();
+    four = InformacionScreen();
 
     pages =[one,two,tree,four];
-
-    currentPage=one;
+    currentTab = widget.i;
+    currentPage=pages[widget.i];
     super.initState();
   }
   
@@ -65,7 +70,6 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
         ],
       ),
-      
     );
   }
 }

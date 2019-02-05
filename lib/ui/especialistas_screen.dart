@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:bitstudio/model/especialistas.dart';
-import 'package:bitstudio/model/tratamientos.dart';
+import 'package:bitstudio/model/subTratamientos.dart';
 import 'package:bitstudio/ui/turnos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class EspecialistasScreen extends StatefulWidget {
-  final Tratamientos tratamientos;
+  final SubTratamientos tratamientos;
   EspecialistasScreen(this.tratamientos);
 
   @override
@@ -17,7 +17,7 @@ class EspecialistasScreen extends StatefulWidget {
 final especialistasReference = FirebaseDatabase.instance.reference().child('especialistas');
 
 class _EspecialistasScreenState extends State<EspecialistasScreen> {
-  List<Tratamientos> tratamientos;
+  List<SubTratamientos> tratamientos;
   List<Especialistas> listEspecialista;
 
   StreamSubscription<Event> _onEspecialistasAddedSubscription;
@@ -62,6 +62,7 @@ class _EspecialistasScreenState extends State<EspecialistasScreen> {
                     child: Image.network(
                       '${listEspecialista[index].fotoperfil}',
                       fit: BoxFit.cover,
+                      filterQuality: FilterQuality.low,
                     ),
                   ),) 
                 ),
@@ -95,7 +96,7 @@ class _EspecialistasScreenState extends State<EspecialistasScreen> {
   }
 
   void _navigateToEspecialistas(
-      BuildContext context, Especialistas espe, Tratamientos note) async {
+      BuildContext context, Especialistas espe, SubTratamientos note) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => TurnosScreen(espe, note)),

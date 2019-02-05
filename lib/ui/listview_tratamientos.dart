@@ -4,7 +4,6 @@ import 'package:bitstudio/ui/especialistas_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:bitstudio/model/tratamientos.dart';
-import 'package:folding_cell/folding_cell.dart';
 import 'package:configurable_expansion_tile/configurable_expansion_tile.dart';
 
 class ListviewTratamientos extends StatefulWidget {
@@ -71,6 +70,7 @@ class _ListviewTratamientosState extends State<ListviewTratamientos> {
                               Image.network(
                                 '${items[index].imageurl}',
                                 filterQuality: FilterQuality.low,
+                                fit: BoxFit.cover,
                               ),
                               Text(
                                 '${items[index].id}',
@@ -105,22 +105,15 @@ class _ListviewTratamientosState extends State<ListviewTratamientos> {
             leading: Container(
               child: Icon(Icons.arrow_drop_down, color: Colors.black),
             ),
-            title: Text(name.nombre),
-            subtitle: Row(
-              children: <Widget>[
-                Icon(Icons.monetization_on, color: Colors.grey),
-                Text(
-                  " 80",
-                  style: TextStyle(color: Colors.black),
-                )
-              ],
-            ),
-            trailing: Text("duracion 40 min"),
-            onTap: () {
-              print("object");
-            },
-          )
-        ],
+            title: Text(name.nombre,
+            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+            subtitle: Text("Precio: ${name.precio}",
+                        style: TextStyle(color: Colors.black),
+                      ),
+            trailing: Text("Duracion:${name.duracion} min"),
+            onTap: () => _navigateToNote(context, name),
+          ),
+       Divider(height: 1,) ],
       ),
       );}
       
@@ -128,7 +121,7 @@ class _ListviewTratamientosState extends State<ListviewTratamientos> {
     return childrenText;
   }
 
-  void _navigateToNote(BuildContext context, Tratamientos note) async {
+  void _navigateToNote(BuildContext context, SubTratamientos note) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EspecialistasScreen(note)),

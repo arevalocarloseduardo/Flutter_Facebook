@@ -1,5 +1,6 @@
 import 'package:bitstudio/model/especialistas.dart';
 import 'package:bitstudio/model/horarios.dart';
+import 'package:bitstudio/model/subTratamientos.dart';
 import 'package:bitstudio/model/tratamientos.dart';
 import 'package:bitstudio/model/turnos.dart';
 import 'package:bitstudio/ui/confirmacion_screen.dart';
@@ -11,7 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class TurnosScreen extends StatefulWidget {
   final Especialistas especialistas;
-  final Tratamientos tratamientos;
+  final SubTratamientos tratamientos;
   TurnosScreen(this.especialistas, this.tratamientos);
 
   @override
@@ -315,16 +316,15 @@ class _TurnosScreenState extends State<TurnosScreen> {
 
   void _onTurnosAdded(Event event) {
     setState(() {
+      //se añaden todos los turnos de la BD
       turnos.add(new Turnos.fromSnapshot(event.snapshot));
     });
     horaTurnos.clear();
+    //Se guardan Solo los turnos de los especialistas seleccionado
     for (var i = 0; i < turnos.length; i++) {
       if (turnos[i].especialista == widget.especialistas.id) {
-        print("turno especia${turnos[i].especialista}");
-        print("especialista${widget.especialistas.id}");
+        //se añade a los turnos la hora
         horaTurnos.add("${turnos[i].hora}");
-        print("selleciono la hora${turnos[i].hora}");
-        print("y fehca ${turnos[i].fecha}");
       }
     }
   }
@@ -338,7 +338,7 @@ class _TurnosScreenState extends State<TurnosScreen> {
     });
   }
 }
-void _navigateToNote(BuildContext context, Tratamientos note,Especialistas espe,hora,String dia) async {
+void _navigateToNote(BuildContext context, SubTratamientos note,Especialistas espe,hora,String dia) async {
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ConfirmacionScreen(espe,note,hora,dia)),
@@ -359,12 +359,10 @@ void imprimirListaHorarios(
     List hora, List<Horarios> horarios, List<String> p1) {
   hora.clear();
   for (var i = 0; i < horarios.length; i++) {
-    print("el leght${horarios.length}");
     var indexA = p1.indexOf(horarios[i].a);
     var indexDe = p1.indexOf(horarios[i].de);
     for (var e = indexDe; e < indexA; e++) {
       hora.add("${p1[e]}");
-      print("${p1[e]}");
     }
   }
 }

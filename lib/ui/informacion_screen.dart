@@ -3,7 +3,7 @@ import 'package:bitstudio/utils/common_divider.dart';
 import 'package:bitstudio/utils/common_scaffold.dart';
 import 'package:bitstudio/utils/profile_tile.dart';
 
-class NoticiasScreen extends StatelessWidget {
+class InformacionScreen extends StatelessWidget {
   var deviceSize;
   //Column1
   Widget profileColumn() => Container(
